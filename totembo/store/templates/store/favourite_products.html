@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+{% block navbar %}
+{% include 'components/_navbar.html' %}
+{% endblock navbar %}
+
+
+{% block main %}
+
+
+<section class="category_products">
+
+
+    <!-- PRODUCTS BLOCK START -->
+    <div class="container">
+        <h3 class="selection__title text-center m-5">Favourite products</h3>
+        <div class="row justify-content-center">
+            {% for product in products %}
+            {% include 'store/components/_product_card.html' %}
+            {% empty %}
+            <h4 class="selection__title text-center m-5">Your basket is empty</h4>
+            <img src="https://www.iconpacks.net/icons/2/free-shopping-cart-icon-3045-thumb.png"
+                 alt="">
+            {% endfor %}
+        </div>
+    </div>
+    <!-- PRODUCTS BLOCK END -->
+
+
+</section>
+
+
+{% endblock main %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+{% block main %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box-element">
+                <a href="{% url 'card' %}" class="btn btn-primary">Back</a>
+            </div>
+            <hr>
+            <h3>Ordered Products</h3>
+            <div class="cart-row">
+                <div style="flex:2"></div>
+                <div style="flex:2"><strong>Product</strong></div>
+                <div style="flex:2"><strong>Price</strong></div>
+                <div style="flex:2"><strong>Quantity</strong></div>
+                <div style="flex:2"><strong>All</strong></div>
+            </div>
+            {% for item in products %}
+            {% include 'store/components/_cart_row.html' %}
+            {% endfor %}
+
+            <h5>Products quantity: {{ order.get_cart_total_quantity }}</h5>
+            <h5>Total: {{ order.get_cart_total_price|floatformat:2 }}</h5>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="box-element">
+            <form action="post" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="user-info">
+                    <hr>
+                    <p>Your Info</p>
+                    <div class="form-field">
+                        {{ customer_form.name }}
+                    </div>
+                    <div class="form-field">
+                        {{ customer_form.email }}
+                    </div>
+                </div>
+
+                <div id="shipping-info">
+                    <hr>
+                    <p>Shipping Address</p>
+                    {% for field in shipping_form %}
+                    <div class="form-field">
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="btn btn-success" type="submit">Order</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main %}

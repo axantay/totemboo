@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block navbar %}
+{% include 'components/_navbar.html' %}
+{% endblock navbar %}
+
+
+{% block text_block %}
+{% include 'components/_text_block.html' %}
+{% endblock text_block %}
+
+
+{% block header_poster %}
+{% include 'components/_header_poster.html' %}
+{% endblock header_poster %}
+
+
+{% block main %}
+
+
+<!-- BLOCKS GUARANTEES START -->
+{% include 'store/components/_guarantes.html' %}
+<!-- BLOCKS GUARANTEES START -->
+
+
+{% for category in categories %}
+<section class="products-section">
+    <!-- SECTION CHAIN COLLECTION START -->
+    {% for subcategory in category.subcategory.all %}
+    <h2 class="main_title text-center">{{ subcategory.title }}</h2>
+    <div class="container">
+        <div class="row">
+
+            {% for product in subcategory.products.all %}
+            {% include 'store/components/_product_card.html' %}
+            {% endfor %}
+
+        </div>
+    </div>
+    {% endfor %}
+    <!-- SECTION CHAIN COLLECTION END -->
+</section>
+{% endfor %}
+<!-- SLIDER BLOCK START -->
+{% include 'store/components/_slider_block.html' %}
+<!-- SLIDER BLOCK END -->
+
+<!-- BLOCK EMAIL FORM START -->
+{% include 'store/components/_email_form.html' %}
+<!-- BLOCK EMAIL FORM END -->
+
+{% endblock main %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+{% block navbar %}
+{% include 'components/_navbar.html' %}
+{% endblock navbar %}
+
+
+{% block main %}
+<section class="product_detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% include 'store/components/_product_slider.html' %}
+            </div>
+            <div class="col-md-6">
+                <div class="product_detail-info">
+                    <h2 class="product_detail-title">{{ product.title }}</h2>
+                    <p class="product_detail-desc">{{ product.category.title }}</p>
+                    <p class="product_detail-price">${{ product.price }}</p>
+
+                    <ul class="product_detail-characteristic">
+                        <li class="product_detail-characteristic_item d-flex justify-content-between">
+                            <span>Size (mm)</span>
+                            <span>{{ product.size }}</span>
+                        </li>
+                        <li class="product_detail-characteristic_item d-flex justify-content-between">
+                            <span>Colour</span>
+                            <span>{{ product.colour }}</span>
+                        </li>
+                        <li class="product_detail-characteristic_item d-flex justify-content-between">
+                            <span>Watch type</span>
+                            <span>{{ product.description }}</span>
+                        </li>
+                        <li class="product_detail-characteristic_item d-flex justify-content-between">
+                            <span>Details</span>
+                        </li>
+                    </ul>
+                </div>
+                <p class="product_detail-guarantee">30 days return, free shipping</p>
+                <a href="{% url 'to_card' product.pk 'add' %}" class="product_detail-buy_btn">ADD TO CART</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% include 'store/components/_brand_info.html' %}
+
+
+{% include 'store/components/_custom_reviews.html' %}
+
+{% if request.user.is_authenticated %}
+<div class="container">
+    <h3>Your feedback</h3>
+    <form action="{% url 'save_review' product.slug %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ review_form.text }}
+        <button type="submit" class="btn btn-success">Add f eedback</button>
+    </form>
+
+</div>
+{% endif %}
+
+<div class="recommended_goods">
+    <h2 class="product_detail-main-title text-center">You may also like</h2>
+
+    <!-- PRODUCTS BLOCK START -->
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+            {% include 'store/components/_product_card.html' %}
+            {% endfor %}
+        </div>
+    </div>
+    <!-- PRODUCTS BLOCK END -->
+
+</div>
+
+
+{% include 'store/components/_email_form.html' %}
+{% endblock main %}

@@ -1,0 +1,78 @@
+{% load static %}
+{% load store_tags %}
+{% get_categories as categories %}
+<nav class="header_nav">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                <a href="{% url 'index' %}"><img src="{% static 'images/header_logo.jpg' %}" alt=""></a>
+            </div>
+            <div class="col-sm-8 col-lx-8 m-auto">
+                <ul class="header_nav-menu d-flex justify-content-center flex-wrap text-center">
+                    {% for category in categories %}
+                    <li class="header_nav-item"><a class="header_nav-link" href="{{ category.get_absolute_url }}">
+                        {{ category.title|upper }}
+                    </a></li>
+                    {% endfor %}
+
+                    <li class="header_nav-item mt-3 mt-lg-0"><a class="header_nav-link" href="{% url 'card' %}">CARD</a>
+                    </li>
+
+                    <li class="header_nav-item mt-3 mt-lg-0">
+                        {% if request.user.is_authenticated %}
+                        <a class="header_nav-link" href="{% url 'logout' %}">LOG OUT</a>
+                        {% else %}
+                        <a class="header_nav-link" href="{% url 'login_registration' %}">SIGN IN</a>
+                        {% endif %}
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="header_panel">
+        <div class="header_panel-item">
+            <img src="{% static 'images/icons/search_icon.svg' %}" alt="">
+        </div>
+        <a href="{% url 'favourite_products' %}" class="header_panel-item">
+            <img src="{% static 'images/icons/basket_icon.svg' %}" alt="">
+        </a>
+        <div class="header_panel-item">
+            <img src="{% static 'images/icons/user_icon.svg' %}" alt="">
+        </div>
+    </div>
+
+    <div class="header_lx-panel">
+        <input type="checkbox" class="toggler">
+        <div class="hamburger">
+            <div></div>
+        </div>
+        <div class="menu">
+            <div>
+                <div>
+                    <ul>
+                        <li>
+                            <a class="header_nav-link" href=""><img src="{% static 'images/icons/basket_icon.svg' %}"
+                                                                    alt=""></a>
+                            <a class="header_nav-link" href=""><img src="{% static 'images/icons/ru_lang_icon.svg' %}"
+                                                                    alt=""></a>
+                        </li>
+                        <li class="header_nav-item"><a class="header_nav-link" href="">PROFILE</a></li>
+                        {% for category in categories %}
+                        <li class="header_nav-item"><a class="header_nav-link" href="{{ category.get_absolute_url }}">
+                            {{ category.title|upper }}
+                        </a></li>
+                        {% endfor %}
+                        <li class="header_nav-item">
+                            {% if request.user.is_authenticated %}
+                            <a class="header_nav-link" href="{% url 'logout' %}">LOG OUT</a>
+                            {% else %}
+                            <a class="header_nav-link" href="{% url 'login_registration' %}">SIGN IN</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,12 @@
+<div class="product_detail-slider">
+    {% for photo in product.images.all %}
+    <div class="product_detail-slider_block">
+        <img src="{{ photo.image.url }}" alt="" width="600" height="600">
+    </div>
+    {% empty %}
+     <div class="product_detail-slider_block">
+        <img src="{{ product.get_first_photo }}" alt="", width="600" height="600">
+    </div>
+    {% endfor %}
+
+</div>
